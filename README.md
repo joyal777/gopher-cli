@@ -1,22 +1,31 @@
-# GX-Shell 🐹
+# GX-Shell 🐹 (Version 2.0)
 
-A lightweight, interactive command-line interface (CLI) built in Go for fast file and directory management. Instead of complex terminal commands, GX-Shell provides a dedicated environment for quick file operations.
+A powerful, custom interactive shell built in Go. GX-Shell transforms your standard terminal into a specialized environment for rapid file system management with custom "GX" prefixed commands.
 
 ## ✨ Features
-- **Interactive Mode**: Runs in a dedicated shell loop.
-- **Smart Creation**: Automatically detects if you want a file or a folder.
-- **Recursive Delete**: Easily remove files or entire directories.
+- **Interactive Environment**: Real-time path display in your prompt.
+- **Smart File Management**: Fast creation, navigation, and deletion.
+- **Storage Analytics**: Calculate the total size of files and directories (auto-converts to KB/MB).
+- **Directory Navigation**: Full support for moving through your file system.
 
-## 🚀 Commands
+## 🚀 Command Reference
+
 | Command | Action | Example |
 | :--- | :--- | :--- |
-| `gx` | Create a File or Folder | `gx my_folder` or `gx note.txt` |
-| `gxd` | Delete a File or Folder | `gxd old_file.txt` |
-| `exit` | Exit the shell | `exit` or `Ctrl+X` |
+| `gx`  | **Create** a File or Folder | `gx notes.txt` or `gx source_code` |
+| `gxd` | **Delete** (Recursive) | `gxd old_folder` |
+| `gxc` | **Change Directory** (cd) | `gxc ..` or `gxc projects` |
+| `gxl` | **List** items in directory | `gxl` |
+| `gxs` | **Check Storage Size** | `gxs my_videos` |
+| `exit`| **Quit** GX-Shell | `exit` or `Ctrl+X` |
 
-## 🛠️ Installation & Setup
+## 🛠️ Getting Started
 
-1. **Clone the repository:**
+### Prerequisites
+- [Go](https://go.dev/doc/install) installed on your machine.
+
+### Installation
+1. **Clone & Enter:**
    ```bash
    git clone [https://github.com/joyal777/gopher-cli.git](https://github.com/joyal777/gopher-cli.git)
    cd gopher-cli
