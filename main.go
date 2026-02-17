@@ -1,47 +1,92 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"os"
-
-	"github.com/spf13/cobra"
+	"strings"
 )
 
 func main() {
-	// 1. Define the Root Command
-	var rootCmd = &cobra.Command{
-		Use:   "gopherctl",
-		Short: "GopherCTL is a simple demo CLI",
-		Long:  `A comprehensive example of building a CLI in Go using the Cobra library.`,
-		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Println("Welcome to GopherCTL! Use --help to see available commands.")
-		},
-	}
+	fmt.Println("--- Gopher Shell (GX) Activated ---")
+	fmt.Println("Commands: gx [name] (Create), gxd [name] (Delete)")
+	fmt.Println("Press Ctrl+X and Enter to Exit")
+	fmt.Println("-----------------------------------")
 
-	// 2. Define a Sub-command: 'greet'
-	var name string
-	var greetCmd = &cobra.Command{
-		Use:   "greet",
-		Short: "Greets the user",
-		Run: func(cmd *cobra.Command, args []string) {
-			if name != "" {
-				fmt.Printf("Hello, %s! Welcome to the Go open-source world.\n", name)
-			} else {
-				fmt.Println("Hello there, Gopher! Try using the --name flag.")
+	scanner := bufio.NewScanner(os.Stdin)
+
+	for {
+		fmt.Print("gx-shell> ") // The separate command prompt
+		if !scanner.Scan() {
+			break
+		}
+
+		input := scanner.Text()
+		parts := strings.Fields(input)
+
+		if len(parts) == 0 {
+			continue
+		}
+
+		command := parts[0]
+
+		// Handle Exit Logic (Ctrl+X is \x18 in ASCII)
+		if command == "\x18" || command == "exit" {
+			fmt.Println("Exiting Gopher Shell. Bye!")
+			break
+		}
+
+		switch command {
+		case "gx":
+			if len(parts) < 2 {
+				fmt.Println("Error: Please provide a name (e.g., gx foldername)")
+				continue
 			}
-		},
+			target := parts[1]
+			createItem(target)
+
+		case "gxd":
+			if len(parts) < 2 {
+				fmt.Println("Error: Please provide a name to delete")
+				continue
+			}
+			target := parts[1]
+			deleteItem(target)
+
+		default:
+			fmt.Printf("Unknown command: %s. Use gx or gxd.\n", command)
+		}
 	}
+}
 
-	// 3. Add Flags to the sub-command
-	// This creates a flag: --name (or -n)
-	greetCmd.Flags().StringVarP(&name, "name", "n", "", "Name of the person to greet")
-
-	// 4. Add the sub-command to the root
-	rootCmd.AddCommand(greetCmd)
-
-	// 5. Execute the CLI
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
+// Logic for creating files or folders
+func createItem(name string) {
+	if strings.Contains(name, ".") {
+		// It's a file
+		file, err := os.Create(name)
+		if err != nil {
+			fmt.Println("Error creating file:", err)
+			return
+		}
+		defer file.Close()
+		fmt.Printf("File '%s' created successfully.\n", name)
+	} else {
+		// It's a folder
+		err := os.Mkdir(name, 0755)
+		if err != nil {
+			fmt.Println("Error creating folder:", err)
+			return
+		}
+		fmt.Printf("Folder '%s' created successfully.\n", name)
 	}
+}
+
+// Logic for deleting
+func deleteItem(name string) {
+	err := os.RemoveAll(name)
+	if err != nil {
+		fmt.Println("Error deleting:", err)
+		return
+	}
+	fmt.Printf("'%s' deleted.\n", name)
 }
