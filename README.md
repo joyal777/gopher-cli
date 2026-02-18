@@ -80,3 +80,58 @@ A powerful, custom interactive shell built in Go. GX-Shell transforms your stand
     go build -o gx.exe
     ./gx.exe
 
+## 📖 Usage Examples
+
+**File Management**
+    ```bash
+    gx-shell> gxl                    # List files
+    gx-shell> gx notes.txt            # Create a file
+    gx-shell> gx projects             # Create a folder
+    gx-shell> gxmv notes.txt old.txt  # Rename file
+    gx-shell> gxcp old.txt backup.txt # Copy file
+    gx-shell> gxd old.txt             # Delete file
+
+**Navigation**
+    ```bash
+    gx-shell> gxpwd                   # Show current directory
+    gx-shell> gxc projects            # Enter projects folder
+    gx-shell> gxc ..                   # Go back
+
+**Viewing Files**
+    ```bash
+    gx-shell> gxhead log.txt          # See first 10 lines
+    gx-shell> gxtail log.txt          # See last 10 lines
+    gx-shell> gxcat config.json       # View entire file
+
+**System Info**
+    ```bash
+    gx-shell> gxdate                   # Check current time
+    gx-shell> gxinfo                   # Show system details
+    gx-shell> gxs downloads             # Check folder size
+    gx-shell> gxwhich python            # Find python location
+
+**Finding & Counting**
+    ```bash
+    gx-shell> gxfind .md               # Find all markdown files
+    gx-shell> gxcount                   # Count items in current dir
+    gx-shell> gxcount ./src             # Count items in src folder
+
+**🤝 Contributing**
+
+This is an open-source project! Feel free to:
+
+Fork the repository
+
+Add new commands or features
+
+Improve existing functionality
+
+Submit a pull request
+
+Whether it's bug fixes, new commands, or documentation improvements, all contributions are welcome!
+
+**📝 License**
+MIT License - feel free to use this project for learning or building your own tools.
+
+Built with ❤️ using Golang | Version 3.0
+
