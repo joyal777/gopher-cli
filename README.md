@@ -80,7 +80,7 @@ A powerful, custom interactive shell built in Go. GX-Shell transforms your stand
     go build -o gx.exe
     ./gx.exe
 
-## 📖 Usage Examples
+**📖 Usage Examples**
 
 **File Management**
     ```bash
