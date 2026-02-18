@@ -82,7 +82,7 @@ A powerful, custom interactive shell built in Go. GX-Shell transforms your stand
 
 **📖 Usage Examples**
 
-**File Management**
+1.  **File Management**
     ```bash
     gx-shell> gxl                    # List files
     gx-shell> gx notes.txt            # Create a file
@@ -91,26 +91,26 @@ A powerful, custom interactive shell built in Go. GX-Shell transforms your stand
     gx-shell> gxcp old.txt backup.txt # Copy file
     gx-shell> gxd old.txt             # Delete file
 
-**Navigation**
+2.  **Navigation**
     ```bash
     gx-shell> gxpwd                   # Show current directory
     gx-shell> gxc projects            # Enter projects folder
     gx-shell> gxc ..                   # Go back
 
-**Viewing Files**
+3.  **Viewing Files**
     ```bash
     gx-shell> gxhead log.txt          # See first 10 lines
     gx-shell> gxtail log.txt          # See last 10 lines
     gx-shell> gxcat config.json       # View entire file
 
-**System Info**
+4.  **System Info**
     ```bash
     gx-shell> gxdate                   # Check current time
     gx-shell> gxinfo                   # Show system details
     gx-shell> gxs downloads             # Check folder size
     gx-shell> gxwhich python            # Find python location
 
-**Finding & Counting**
+5.  **Finding & Counting**
     ```bash
     gx-shell> gxfind .md               # Find all markdown files
     gx-shell> gxcount                   # Count items in current dir
