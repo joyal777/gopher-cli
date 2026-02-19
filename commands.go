@@ -15,6 +15,11 @@ import (
 
 // createItem creates a new file (if name contains ".") or directory
 func createItem(name string) {
+	// Security check
+	if !validateFilename(name) {
+		return
+	}
+
 	if strings.Contains(name, ".") {
 		file, err := os.Create(name)
 		if err != nil {
@@ -35,6 +40,17 @@ func createItem(name string) {
 
 // deleteItem removes a file or directory recursively
 func deleteItem(name string) {
+	// Security check
+	if !validateFilename(name) {
+		return
+	}
+
+	// Additional safety check - prevent deleting system files
+	if isSuspiciousPath(name) {
+		fmt.Println("❌ Error: Access denied - Cannot delete this path")
+		return
+	}
+
 	err := os.RemoveAll(name)
 	if err != nil {
 		fmt.Println("Error:", err)
@@ -45,6 +61,11 @@ func deleteItem(name string) {
 
 // changeDir changes the current working directory
 func changeDir(path string) {
+	// Security check
+	if !validatePath(path) {
+		return
+	}
+
 	err := os.Chdir(path)
 	if err != nil {
 		fmt.Println("Error changing directory:", err)
@@ -53,6 +74,15 @@ func changeDir(path string) {
 
 // moveFile moves or renames a file from source to destination
 func moveFile(src, dst string) {
+	// Security checks
+	if !validatePath(src) || !validatePath(dst) {
+		return
+	}
+
+	if !validateFilename(filepath.Base(dst)) {
+		return
+	}
+
 	err := os.Rename(src, dst)
 	if err != nil {
 		fmt.Printf("Error moving '%s' to '%s': %v\n", src, dst, err)
@@ -63,6 +93,26 @@ func moveFile(src, dst string) {
 
 // copyFile copies a file from source to destination
 func copyFile(src, dst string) {
+	// Security checks
+	if !validatePath(src) || !validatePath(dst) {
+		return
+	}
+
+	if !validateFilename(filepath.Base(dst)) {
+		return
+	}
+
+	// Check file size before copying
+	info, err := os.Stat(src)
+	if err != nil {
+		fmt.Printf("Error accessing source file '%s': %v\n", src, err)
+		return
+	}
+
+	if !checkFileSizeLimit(info.Size()) {
+		return
+	}
+
 	data, err := os.ReadFile(src)
 	if err != nil {
 		fmt.Printf("Error reading source file '%s': %v\n", src, err)
@@ -80,6 +130,11 @@ func copyFile(src, dst string) {
 
 // findFiles searches for files by name in the current directory
 func findFiles(name string) {
+	// Security check
+	if !validateSearchTerm(name) {
+		return
+	}
+
 	fmt.Printf("Searching for '%s' in current directory...\n", name)
 
 	found := 0
@@ -109,6 +164,16 @@ func findFiles(name string) {
 
 // echoToFile appends text to a file
 func echoToFile(text, filename string) {
+	// Security checks
+	if !validateFilename(filename) {
+		return
+	}
+
+	if len(text) > 10000 {
+		fmt.Println("❌ Error: Text too long (max 10000 chars)")
+		return
+	}
+
 	file, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
 	if err != nil {
 		fmt.Printf("Error opening file '%s': %v\n", filename, err)
@@ -126,6 +191,22 @@ func echoToFile(text, filename string) {
 
 // duplicateFile creates a copy of a file with "_copy" suffix
 func duplicateFile(filename string) {
+	// Security check
+	if !validateFilename(filename) {
+		return
+	}
+
+	// Check file size before duplicating
+	info, err := os.Stat(filename)
+	if err != nil {
+		fmt.Printf("Error accessing file '%s': %v\n", filename, err)
+		return
+	}
+
+	if !checkFileSizeLimit(info.Size()) {
+		return
+	}
+
 	data, err := os.ReadFile(filename)
 	if err != nil {
 		fmt.Printf("Error reading file '%s': %v\n", filename, err)
@@ -135,6 +216,10 @@ func duplicateFile(filename string) {
 	ext := filepath.Ext(filename)
 	base := strings.TrimSuffix(filename, ext)
 	newFilename := base + "_copy" + ext
+
+	if !validateFilename(newFilename) {
+		return
+	}
 
 	err = os.WriteFile(newFilename, data, 0644)
 	if err != nil {
@@ -250,6 +335,15 @@ func tailFile(filename string, lines int) {
 
 // grepFile searches for text within a file (case-insensitive)
 func grepFile(searchText, filename string) {
+	// Security checks
+	if !validateSearchTerm(searchText) {
+		return
+	}
+
+	if !validateFilename(filename) {
+		return
+	}
+
 	file, err := os.Open(filename)
 	if err != nil {
 		fmt.Printf("Error opening file '%s': %v\n", filename, err)
@@ -282,6 +376,11 @@ func grepFile(searchText, filename string) {
 
 // showSize calculates and displays the total size of a file or directory
 func showSize(name string) {
+	// Security check
+	if !validatePath(name) {
+		return
+	}
+
 	var totalSize int64
 
 	err := filepath.Walk(name, func(_ string, info os.FileInfo, err error) error {
@@ -420,6 +519,11 @@ func countFiles(path string) {
 
 // createEmptyFile creates an empty file
 func createEmptyFile(name string) {
+	// Security check
+	if !validateFilename(name) {
+		return
+	}
+
 	file, err := os.Create(name)
 	if err != nil {
 		fmt.Printf("Error creating file '%s': %v\n", name, err)
@@ -431,6 +535,11 @@ func createEmptyFile(name string) {
 
 // createDirectory creates a new directory
 func createDirectory(name string) {
+	// Security check
+	if !validateFilename(name) {
+		return
+	}
+
 	err := os.Mkdir(name, 0755)
 	if err != nil {
 		fmt.Printf("Error creating directory '%s': %v\n", name, err)
@@ -441,6 +550,11 @@ func createDirectory(name string) {
 
 // showFileStats displays detailed statistics about a file
 func showFileStats(filename string) {
+	// Security check
+	if !validateFilename(filename) {
+		return
+	}
+
 	info, err := os.Stat(filename)
 	if err != nil {
 		fmt.Printf("Error accessing file '%s': %v\n", filename, err)
@@ -468,6 +582,11 @@ func showFileStats(filename string) {
 
 // touchFile creates or updates the timestamp of a file
 func touchFile(filename string) {
+	// Security check
+	if !validateFilename(filename) {
+		return
+	}
+
 	if _, err := os.Stat(filename); os.IsNotExist(err) {
 		file, err := os.Create(filename)
 		if err != nil {

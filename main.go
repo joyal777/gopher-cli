@@ -75,8 +75,14 @@ func displayWelcome() {
 	fmt.Println("--------------------------------------")
 }
 
-// handleCommand routes the command to the appropriate handler
+// handleCommand routes the command to the appropriate handler with security validation
 func handleCommand(command string, parts []string) {
+	// Security validation
+	if !ValidateCommandInput(command, parts) {
+		fmt.Println("❌ Error: Invalid command input")
+		return
+	}
+
 	switch command {
 	// File Operations
 	case "gx":
