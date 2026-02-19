@@ -711,7 +711,7 @@ func showTree(dirPath string, prefix string) error {
 }
 
 func showExtendedHelp() {
-	fmt.Println(`
+	fmt.Print(`
 ╔══════════════════════════════════════════════════════════════════╗
 ║              GX-Shell Extended Help (Version 3.5)               ║
 ╚══════════════════════════════════════════════════════════════════╝
