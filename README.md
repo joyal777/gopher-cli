@@ -177,7 +177,22 @@ These commands were recently added for convenience — quick one-liners:
     gx-shell> gxcount ./src             # Count items in src folder
     gx-shell> gxhelp                    # Show detailed help
 
-**🤝 Contributing**
+    ### Advanced Usage
+
+    You can combine GX commands with pipes and redirection just like standard shell utilities:
+
+    ```bash
+    # Count lines containing 'TODO' across .go files
+    gx-shell> gxfind .go | xargs gxgrep "TODO" | wc -l
+
+    # Save MD5 checksum of a file to a file
+    gx-shell> gxmd5 bigfile.bin > bigfile.md5
+
+    # Create a backup and then open it (example on Unix-like systems)
+    gx-shell> gxbackup notes.txt && ls -t notes.txt.bak.* | head -n1 | xargs gxopen
+    ```
+
+    **🤝 Contributing**
 
 This is an open-source project! Feel free to:
 
