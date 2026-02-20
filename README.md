@@ -211,3 +211,15 @@ MIT License - feel free to use this project for learning or building your own to
 
 Built with ❤️ using Golang | Version 3.5
 
+## Changelog
+
+- 2026-02-20 — v3.5.1
+    - Added 11 new utility commands: `gxmd5`, `gxsha1`, `gxlines`, `gxcountwords`, `gxemptylinecount`, `gxreplace`, `gxopen`, `gxrenameext`, `gxbackup`, `gxtruncate`, `gxpermissions`.
+    - Documentation: updated README with quick reference, advanced usage examples, and badges.
+
+## Contributors
+
+- joyal777 — maintainer, commands and docs
+
+Contributions welcome — open an issue or submit a PR for improvements.
+
