@@ -2,7 +2,9 @@ package main
 
 import (
 	"bufio"
+	"crypto/md5"
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -605,6 +607,29 @@ func touchFile(filename string) {
 		return
 	}
 	fmt.Printf("✅ File '%s' timestamp updated\n", filename)
+}
+
+// gxmd5 computes and prints the MD5 checksum of a file
+func gxmd5(filename string) {
+	if !validateFilename(filename) {
+		return
+	}
+
+	file, err := os.Open(filename)
+	if err != nil {
+		fmt.Printf("Error opening file '%s': %v\n", filename, err)
+		return
+	}
+	defer file.Close()
+
+	hasher := md5.New()
+	if _, err := io.Copy(hasher, file); err != nil {
+		fmt.Printf("Error reading file '%s': %v\n", filename, err)
+		return
+	}
+
+	sum := hasher.Sum(nil)
+	fmt.Printf("MD5(%s) = %x\n", filename, sum)
 }
 
 // ==================== HELP ====================
