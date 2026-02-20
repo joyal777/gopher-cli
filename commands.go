@@ -705,6 +705,24 @@ func gxtruncate(filename, sizeStr string) {
 	fmt.Printf("✅ Truncated '%s' to %d bytes\n", filename, size)
 }
 
+// gxpermissions shows file permission bits and basic metadata
+func gxpermissions(filename string) {
+	if !validateFilename(filename) {
+		return
+	}
+
+	info, err := os.Stat(filename)
+	if err != nil {
+		fmt.Printf("Error accessing '%s': %v\n", filename, err)
+		return
+	}
+
+	fmt.Printf("File: %s\n", filename)
+	fmt.Printf("Size: %d bytes\n", info.Size())
+	fmt.Printf("Permissions: %v\n", info.Mode().Perm())
+	fmt.Printf("IsDir: %v\n", info.IsDir())
+}
+
 // gxlines counts and prints the number of lines in a file
 func gxlines(filename string) {
 	if !validateFilename(filename) {
