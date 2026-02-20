@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"crypto/md5"
+	"crypto/sha1"
 	"fmt"
 	"io"
 	"os"
@@ -630,6 +631,29 @@ func gxmd5(filename string) {
 
 	sum := hasher.Sum(nil)
 	fmt.Printf("MD5(%s) = %x\n", filename, sum)
+}
+
+// gxsha1 computes and prints the SHA-1 checksum of a file
+func gxsha1(filename string) {
+	if !validateFilename(filename) {
+		return
+	}
+
+	file, err := os.Open(filename)
+	if err != nil {
+		fmt.Printf("Error opening file '%s': %v\n", filename, err)
+		return
+	}
+	defer file.Close()
+
+	hasher := sha1.New()
+	if _, err := io.Copy(hasher, file); err != nil {
+		fmt.Printf("Error reading file '%s': %v\n", filename, err)
+		return
+	}
+
+	sum := hasher.Sum(nil)
+	fmt.Printf("SHA1(%s) = %x\n", filename, sum)
 }
 
 // gxlines counts and prints the number of lines in a file
