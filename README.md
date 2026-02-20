@@ -38,6 +38,8 @@ A powerful, custom interactive shell built in Go. GX-Shell transforms your stand
 | `gxcount` | **Count** files in directory | `gxcount` or `gxcount ./folder` |
 
 ### File Viewing
+| `gxmd5` | **MD5 checksum** of a file | `gxmd5 file.bin` |
+| `gxsha1` | **SHA-1 checksum** of a file | `gxsha1 file.bin` |
 
 | Command | Action | Example |
 | :--- | :--- | :--- |
@@ -48,6 +50,9 @@ A powerful, custom interactive shell built in Go. GX-Shell transforms your stand
 | `gxstat` | **Show** detailed file stats | `gxstat document.pdf` |
 
 ### System Information
+| `gxlines` | **Count** lines in a file | `gxlines README.md` |
+| `gxcountwords` | **Count** words in a file | `gxcountwords essay.txt` |
+| `gxemptylinecount` | **Count** blank lines in a file | `gxemptylinecount notes.md` |
 
 | Command | Action | Example |
 | :--- | :--- | :--- |
@@ -58,6 +63,12 @@ A powerful, custom interactive shell built in Go. GX-Shell transforms your stand
 | `gxtree` | **Display** directory tree | `gxtree ./src` |
 
 ### Utilities & Tools
+| `gxreplace` | **Replace** text in file (in-place) | `gxreplace old new file.txt` |
+| `gxopen` | **Open** file with default app | `gxopen image.png` |
+| `gxrenameext` | **Rename** file extension | `gxrenameext file.txt md` |
+| `gxbackup` | **Create** timestamped backup | `gxbackup notes.txt` |
+| `gxtruncate` | **Truncate** file to size (bytes) | `gxtruncate file.bin 1024` |
+| `gxpermissions` | **Show** permissions & metadata | `gxpermissions script.sh` |
 
 | Command | Action | Example |
 | :--- | :--- | :--- |
