@@ -731,6 +731,29 @@ func gxrenameext(filename, newext string) {
 	fmt.Printf("✅ Renamed '%s' -> '%s'\n", filename, newname)
 }
 
+// gxbackup creates a timestamped backup copy of a file
+func gxbackup(filename string) {
+	if !validateFilename(filename) {
+		return
+	}
+
+	data, err := os.ReadFile(filename)
+	if err != nil {
+		fmt.Printf("Error reading file '%s': %v\n", filename, err)
+		return
+	}
+
+	ts := time.Now().Format("20060102T150405")
+	backupName := filename + ".bak." + ts
+
+	if err := os.WriteFile(backupName, data, 0644); err != nil {
+		fmt.Printf("Error creating backup '%s': %v\n", backupName, err)
+		return
+	}
+
+	fmt.Printf("✅ Backup created: %s\n", backupName)
+}
+
 // ==================== HELP ====================
 
 // showExtendedHelp displays the extended help menu
