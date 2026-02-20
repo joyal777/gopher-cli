@@ -659,6 +659,29 @@ func gxlines(filename string) {
 	fmt.Printf("%s: %d lines\n", filename, lines)
 }
 
+// gxreplace replaces all occurrences of old with new in the provided file
+func gxreplace(old, new, filename string) {
+	if !validateFilename(filename) {
+		return
+	}
+
+	data, err := os.ReadFile(filename)
+	if err != nil {
+		fmt.Printf("Error reading file '%s': %v\n", filename, err)
+		return
+	}
+
+	content := strings.ReplaceAll(string(data), old, new)
+
+	err = os.WriteFile(filename, []byte(content), 0644)
+	if err != nil {
+		fmt.Printf("Error writing file '%s': %v\n", filename, err)
+		return
+	}
+
+	fmt.Printf("✅ Replaced '%s' with '%s' in '%s'\n", old, new, filename)
+}
+
 // ==================== HELP ====================
 
 // showExtendedHelp displays the extended help menu
