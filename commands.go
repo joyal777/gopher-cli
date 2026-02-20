@@ -656,6 +656,34 @@ func gxsha1(filename string) {
 	fmt.Printf("SHA1(%s) = %x\n", filename, sum)
 }
 
+// gxcountwords counts words in a file and prints the total
+func gxcountwords(filename string) {
+	if !validateFilename(filename) {
+		return
+	}
+
+	file, err := os.Open(filename)
+	if err != nil {
+		fmt.Printf("Error opening file '%s': %v\n", filename, err)
+		return
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanWords)
+	words := 0
+	for scanner.Scan() {
+		words++
+	}
+
+	if err := scanner.Err(); err != nil {
+		fmt.Printf("Error reading file '%s': %v\n", filename, err)
+		return
+	}
+
+	fmt.Printf("%s: %d words\n", filename, words)
+}
+
 // gxlines counts and prints the number of lines in a file
 func gxlines(filename string) {
 	if !validateFilename(filename) {
