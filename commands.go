@@ -723,6 +723,35 @@ func gxpermissions(filename string) {
 	fmt.Printf("IsDir: %v\n", info.IsDir())
 }
 
+// gxemptylinecount counts empty (blank) lines in a file
+func gxemptylinecount(filename string) {
+	if !validateFilename(filename) {
+		return
+	}
+
+	file, err := os.Open(filename)
+	if err != nil {
+		fmt.Printf("Error opening file '%s': %v\n", filename, err)
+		return
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	empty := 0
+	for scanner.Scan() {
+		if strings.TrimSpace(scanner.Text()) == "" {
+			empty++
+		}
+	}
+
+	if err := scanner.Err(); err != nil {
+		fmt.Printf("Error reading file '%s': %v\n", filename, err)
+		return
+	}
+
+	fmt.Printf("%s: %d empty line(s)\n", filename, empty)
+}
+
 // gxlines counts and prints the number of lines in a file
 func gxlines(filename string) {
 	if !validateFilename(filename) {
