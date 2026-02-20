@@ -1,6 +1,16 @@
 # GX-Shell 🐹 (Version 3.5)
 
-A powerful, custom interactive shell built in Go. GX-Shell transforms your standard terminal into a specialized environment for rapid file system management with custom "GX" prefixed commands. Now with 20+ commands for complete file system control!
+[![Go](https://img.shields.io/badge/go-1.21%2B-blue)](https://go.dev)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
+A powerful, custom interactive shell built in Go. GX-Shell transforms your standard terminal into a specialized environment for rapid file system management with custom "GX" prefixed commands.
+
+Install quickly:
+
+```bash
+git clone https://github.com/joyal777/gopher-cli.git && cd gopher-cli
+go run main.go
+```
 
 ## ✨ Features
 
