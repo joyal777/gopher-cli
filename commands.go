@@ -10,6 +10,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -682,6 +683,26 @@ func gxcountwords(filename string) {
 	}
 
 	fmt.Printf("%s: %d words\n", filename, words)
+}
+
+// gxtruncate truncates a file to the given size in bytes
+func gxtruncate(filename, sizeStr string) {
+	if !validateFilename(filename) {
+		return
+	}
+
+	size, err := strconv.ParseInt(sizeStr, 10, 64)
+	if err != nil {
+		fmt.Printf("Invalid size '%s': %v\n", sizeStr, err)
+		return
+	}
+
+	if err := os.Truncate(filename, size); err != nil {
+		fmt.Printf("Error truncating '%s': %v\n", filename, err)
+		return
+	}
+
+	fmt.Printf("✅ Truncated '%s' to %d bytes\n", filename, size)
 }
 
 // gxlines counts and prints the number of lines in a file
