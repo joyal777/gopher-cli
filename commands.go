@@ -682,6 +682,29 @@ func gxreplace(old, new, filename string) {
 	fmt.Printf("✅ Replaced '%s' with '%s' in '%s'\n", old, new, filename)
 }
 
+// gxopen opens a file with the system default application
+func gxopen(filename string) {
+	if !validateFilename(filename) {
+		return
+	}
+
+	var cmd *exec.Cmd
+	switch runtime.GOOS {
+	case "windows":
+		cmd = exec.Command("cmd", "/c", "start", "", filename)
+	case "darwin":
+		cmd = exec.Command("open", filename)
+	default:
+		cmd = exec.Command("xdg-open", filename)
+	}
+
+	if err := cmd.Start(); err != nil {
+		fmt.Printf("Error opening '%s': %v\n", filename, err)
+		return
+	}
+	fmt.Printf("Opened '%s' with default application\n", filename)
+}
+
 // ==================== HELP ====================
 
 // showExtendedHelp displays the extended help menu
