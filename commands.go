@@ -705,6 +705,32 @@ func gxopen(filename string) {
 	fmt.Printf("Opened '%s' with default application\n", filename)
 }
 
+// gxrenameext renames a file's extension to the provided new extension (without dot or with dot)
+func gxrenameext(filename, newext string) {
+	if !validateFilename(filename) {
+		return
+	}
+
+	if !strings.HasPrefix(newext, ".") {
+		newext = "." + newext
+	}
+
+	ext := filepath.Ext(filename)
+	base := strings.TrimSuffix(filename, ext)
+	newname := base + newext
+
+	if !validateFilename(filepath.Base(newname)) {
+		return
+	}
+
+	if err := os.Rename(filename, newname); err != nil {
+		fmt.Printf("Error renaming '%s' to '%s': %v\n", filename, newname, err)
+		return
+	}
+
+	fmt.Printf("✅ Renamed '%s' -> '%s'\n", filename, newname)
+}
+
 // ==================== HELP ====================
 
 // showExtendedHelp displays the extended help menu
