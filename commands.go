@@ -632,6 +632,33 @@ func gxmd5(filename string) {
 	fmt.Printf("MD5(%s) = %x\n", filename, sum)
 }
 
+// gxlines counts and prints the number of lines in a file
+func gxlines(filename string) {
+	if !validateFilename(filename) {
+		return
+	}
+
+	file, err := os.Open(filename)
+	if err != nil {
+		fmt.Printf("Error opening file '%s': %v\n", filename, err)
+		return
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	lines := 0
+	for scanner.Scan() {
+		lines++
+	}
+
+	if err := scanner.Err(); err != nil {
+		fmt.Printf("Error reading file '%s': %v\n", filename, err)
+		return
+	}
+
+	fmt.Printf("%s: %d lines\n", filename, lines)
+}
+
 // ==================== HELP ====================
 
 // showExtendedHelp displays the extended help menu
