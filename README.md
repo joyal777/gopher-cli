@@ -80,6 +80,24 @@ go run main.go
 | `gxtruncate` | **Truncate** file to size (bytes) | `gxtruncate file.bin 1024` |
 | `gxpermissions` | **Show** permissions & metadata | `gxpermissions script.sh` |
 
+### Quick Reference: New Commands
+
+These commands were recently added for convenience — quick one-liners:
+
+| Command | Action |
+| :--- | :--- |
+| `gxmd5` | Show MD5 checksum |
+| `gxsha1` | Show SHA-1 checksum |
+| `gxlines` | Count file lines |
+| `gxcountwords` | Count words in a file |
+| `gxemptylinecount` | Count blank lines |
+| `gxreplace` | Replace text in a file (in-place) |
+| `gxopen` | Open file with default application |
+| `gxrenameext` | Change file extension |
+| `gxbackup` | Create timestamped backup |
+| `gxtruncate` | Truncate file to given size (bytes) |
+| `gxpermissions` | Show file permissions and metadata |
+
 | Command | Action | Example |
 | :--- | :--- | :--- |
 | `gxcount` | **Count** files in directory | `gxcount` or `gxcount ./folder` |
